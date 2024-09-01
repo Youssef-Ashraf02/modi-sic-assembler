@@ -1,0 +1,28 @@
+1000	 COPY    START   1000						 0
+1000	 EOF     BYTE    C'EOF'						 0
+1003	 THREE   WORD    3						 0
+1006	 ZERO    WORD    0						 0
+1009	 RETADR  RESW    1						 0
+100C	 LENGTH  RESW    1						 0
+100F	 BUFFER  RESB    4096						 0
+200F	 FIRST   STL     RETADR						 1
+2012	 CLOOP   JSUB    RDREC						 1
+2012	 ...       LDA     LENGTH						 1
+2012	 ...      COMP    ZERO						 1
+2012	 ...        JEQ     ENDFILL						 1
+2012	 ...        JSUB    WRREC						 1
+2012	 ...        J       CLOOP						 1
+2015	 ENDFILL LDA     EOF						 1
+2015	 ...        STA     BUFFER						 1
+2015	 ...        LDA     THREE						 1
+2015	 ...        STA     LENGTH						 1
+2015	 ...        JSUB    WRREC						 1
+2015	 ...        LDL     RETADR						 1
+2015	 ...        FIX						 1
+2018	 RDREC   LDX     ZERO						 1
+2018	 ...        STCH    BUFFER,X						 1
+2018	 ...        LDA     #3						 1
+201B	 WRREC   LDX     ZERO						 0
+201B	 ...        RSUB						 0
+2024	 EOF     BYTE    C'EOFEOFEOF'						 0
+2024	 ...        LDA     #LENGTH						 0
