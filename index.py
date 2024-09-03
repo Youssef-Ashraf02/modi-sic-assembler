@@ -117,13 +117,14 @@ def handle_forward_reference(hex_sum, i, df):
         relocating_bits = hex(int(relocating_bits, 2))[2:].zfill(3).upper()
 
         start_address = location_counter_list[i - t_record_counter] if i - t_record_counter >= 0 else "000000"
-        zaza = "T. " + start_address.zfill(6).upper() + " " + size + " " + relocating_bits + " " + ' '.join(dup_object_code_list)
-        t_record_list.append(zaza)
+        t_record_entry = "T. " + start_address.zfill(6).upper() + " " + size + " " + relocating_bits + " " + ' '.join(dup_object_code_list)
+        t_record_list.append(t_record_entry)
 
         t_record_counter = 0
         bytes_counter = 0
         dup_object_code_list = []
         relocating_bits = ""
+
 
 def parse_instruction(row, df, i):
     global check_relocation, total_sum, symbol_table, forward_reference_table, object_code_list
